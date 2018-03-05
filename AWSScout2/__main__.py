@@ -129,6 +129,13 @@ def main():
     except:
         pass
 
+    if args.json:
+        printInfo('Writing to results.json')
+        fp = open('results.json', 'w')
+        print json.dump(aws_config, fp, default=json_helper)
+        fp.close()
+        sys.exit()
+
     # Save config and create HTML report
     html_report_path = report.save(aws_config, exceptions, args.force_write, args.debug)
 
@@ -138,3 +145,8 @@ def main():
         url = 'file://%s' % os.path.abspath(html_report_path)
         webbrowser.open(url, new=2)
 
+def json_helper(obj):
+    """JSON serialization for datetime values"""
+    if isinstance(obj, datetime.datetime):
+        return obj.isoformat()
+    raise TypeError("Type not serializable")

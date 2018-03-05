@@ -172,6 +172,11 @@ class Scout2ArgumentParser(SharedArgumentParser):
                                  type=int,
                                  default=4,
                                  help='Level of multi-threading wanted [1-5]; defaults to 4.')
+        self.parser.add_argument('--json',
+                                 dest='json',
+                                 default=False,
+                                 action='store_true',
+                                 help='Output violation information as results.json')
 
     def parse_args(self):
         args = self.parser.parse_args()
